@@ -4,4 +4,4 @@ This is the official repository for the paper: "Why Domain Matters: Domain-Aware
 
 We will release our underwater domain labels, evaluation splits, and code for domain-wise analysis here SOON!
 
-The experiments rely on domain labels assigned via this [Underwater Domain Labeling Framework]([https://github.com/example/dataset](https://github.com/melaniewille/underwater_domain_labeling)).
+The experiments rely on domain labels assigned via this [Underwater Domain Labeling Framework](https://github.com/melaniewille/underwater_domain_labeling).
