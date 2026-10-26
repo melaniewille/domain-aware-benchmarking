@@ -1,0 +1,15 @@
+
+path: ..
+train: ../datasets/detector-analysis/generated_txt_files_v4/train.txt  # train images (relative to 'path')
+val: ../datasets/detector-analysis/generated_txt_files_v4/test_color_blue.txt  # test images (relative to 'path')
+
+
+# Number of classes
+nc: 4
+
+# Classes
+names:
+  0: echinus
+  1: holothurian
+  2: scallop
+  3: starfish
