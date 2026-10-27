@@ -133,7 +133,35 @@ This script evaluates the statistical significance and robustness of domain-depe
 
 
 ## Detection Study
-This repository provides the training and testing scripts for [YOLO26n](./detection-study/yolo), [Faster RCNN](./detection-study/faster-rcnn), and [RT-DETR](./detection-study/rt-detr) object detection models. 
+To reproduce our detection study and evaluate how different underwater domain conditions affect object detector performance for [YOLO26n](./detection-study/yolo), [Faster RCNN](./detection-study/faster-rcnn), and [RT-DETR](./detection-study/rt-detr), please follow the steps below.
+
+**Step 1 — Preparation**
+- Install dependencies
+- Make sure you have downloaded the data from Hugging Face as described in the [Datasets](#datasets) section above and place in correct directory
+
+
+**Step 2 — Detector training**
+
+_Scripts_: 
+- [train_yolo_mixed.py](./detection-study/yolo/train_yolo_mixed.py)
+- [train_fasterrcnn.py](detection-study/faster-rcnn/train_fasterrcnn.py)
+- [train_rtdetr_mixed.py](./detection-study/rt-detr/train_yolo_mixed.py)
+
+These scripts train the three object detectors on the combined underwater dataset using the same training and validation splits and save the best model checkpoint.
+
+
+**Step 3 — Domain-dependent detector testing**
+
+_Scripts_: 
+- [detector_ablation_yolo_*_test.pyy](./detection-study/yolo/)
+- [test_fasterrcnn.py](detection-study/faster-rcnn/test_fasterrcnn.py)
+- [detector_ablation_rtdetr_*_test.py](./detection-study/rt-detr/)
+
+These scripts evaluate the trained detectors separately for each domain property. 
+
+
+**Step 4 — Repeat**
+To assess the stability of the observed performance trends, we repeat the training and evaluation five times using independently generated random data splits. Therefore, repeat steps 2 and 3 for the scripts prefixed with v2_ / v3_ / v4_ / v5_ for the corresponding second / third / fourth / fifth experimental run. All detectors use identical data splits within each run, allowing consistent comparisons across architectures and domain conditions. The results reported in our main paper are **averaged** over these 5 independent training and testing runs.
 
 
 ```
@@ -170,8 +198,6 @@ This repository provides the training and testing scripts for [YOLO26n](./detect
 └── ...
 ```
 
-The **results** reported in our **main paper** are the average over 5 independent training and testing runs.
-
 
 
 ## Acknowledgements
@@ -202,7 +228,7 @@ the contributors of the original **RUOD** dataset - check out their [Github](htt
   publisher={Elsevier}
 }
 ```
-the contributors of the revised **RUOD-R** dataset - check out their [Github](https://github.com/RSSL-MTU/RUOD-R)) and paper:
+the contributors of the revised **RUOD-R** dataset - check out their [Github](https://github.com/RSSL-MTU/RUOD-R) and paper:
 ```
 @ARTICLE{11483160,
   author={Awad, Ali and Saleem, Ashraf and Aljnadi, Yaman and Lucas, Evan and Paheding, Sidike and Havens, Timothy C.},
