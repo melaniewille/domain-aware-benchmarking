@@ -7,9 +7,8 @@ We will release a corresponding video on [YouTube](https://www.youtube.com/@mela
 
 Our work contributes to the field of underwater object detection by providing a systematic analysis of how different underwater conditions influence both human annotation quality and object detector performance. While previous works mainly rely on aggregate performance metrics or synthetic domain variations, we introduce a framework that characterizes underwater images based on appearance, scene composition, and acquisition geometry. Using this framework, we demonstrate that both annotation quality and detection performance vary substantially across domains, revealing challenges that are hidden by conventional evaluation approaches. Importantly, conditions that challenge human annotators do not necessarily challenge object detectors in the same way. By making domain shift measurable and interpretable, our work provides a foundation for more informative benchmarking, targeted data collection and annotation, and the development of more robust underwater object detectors for reliable marine environmental monitoring.
 
-The experiments rely on domain labels assigned using our [Underwater Domain Labeling Framework](https://github.com/melaniewille/underwater_domain_labeling).
 
-This repository provides the code and instructions to reproduce our analysis of human annotation quality using the RUOD and RUOD-R datasets, as well as our domain-aware benchmarking of YOLO26n, Faster R-CNN, and RT-DETR on DUO, RUOD-R, and UTDAC.
+This repository provides the code and instructions to reproduce our analysis of human annotation quality using the RUOD and RUOD-R datasets, as well as our domain-aware benchmarking of YOLO26n, Faster R-CNN, and RT-DETR on DUO, RUOD-R, and UTDAC. The experiments rely on domain labels assigned using our [Underwater Domain Labeling Framework](https://github.com/melaniewille/underwater_domain_labeling).
 
 If this repository and/or our paper contributes to your research, please consider citing the publication below.
 
