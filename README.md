@@ -219,7 +219,7 @@ and the contributors of the **UTDAC** dataset.
 We redistribute our derived versions of the datasets according to:
 
 - a **private** permission for the **DUO** dataset from the original authors (email correspondence, October 2025). Further redistribution or commercial use may require additional consent from Liu et al.
-- the **Apache License 2.0** for the **RUOD** dataset, under which it was originally released. We release our subset RUOD-4C under the same license.
+- the **Apache License 2.0** for the **RUOD** dataset, under which it was originally released.
 
 
 
