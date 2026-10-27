@@ -16,7 +16,7 @@ MODEL_PATH = ROOT / "runs" / "detector_analysis_all_trained_fasterrcnn_v2" / "be
 
 YAML_DIR = ROOT.parent / "yamls-detector-analysis"
 
-RESULTS_DIR = ROOT / "runs" / "detector_analysis_all_fasterrcnn_tests_v2"
+RESULTS_DIR = ROOT / "summary_test_results_all" / "run_2"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 DOMAINS = [
