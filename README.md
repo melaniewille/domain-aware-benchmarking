@@ -178,7 +178,8 @@ The **results** reported in our **main paper** are the average over 5 independen
 This work was supported by the QUT Centre for Robotics, QUT Digital Research Infrastructure team for
 HPC, and an ARC DECRA Fellowship DE240100149 to TF.
 
-We also thank the contributors of the **DUO** dataset - check out their [Github](https://github.com/chongweiliu/DUO) and paper:
+We also thank 
+the contributors of the **DUO** dataset - check out their [Github](https://github.com/chongweiliu/DUO) and paper:
 ```
 @inproceedings{liu2021dataset,
   title={A dataset and benchmark of underwater object detection for robot picking},
@@ -189,7 +190,7 @@ We also thank the contributors of the **DUO** dataset - check out their [Github]
   organization={IEEE}
 }
 ```
-and the contributors of the **RUOD** dataset - check out their [Github](https://github.com/dlut-dimt/RUOD) and paper:
+the contributors of the original **RUOD** dataset - check out their [Github](https://github.com/dlut-dimt/RUOD) and paper:
 ```
 @article{fu2023rethinking,
   title={Rethinking general underwater object detection: Datasets, challenges, and solutions},
@@ -201,6 +202,19 @@ and the contributors of the **RUOD** dataset - check out their [Github](https://
   publisher={Elsevier}
 }
 ```
+the contributors of the revised **RUOD-R** dataset - check out their [Github](https://github.com/RSSL-MTU/RUOD-R)) and paper:
+```
+@ARTICLE{11483160,
+  author={Awad, Ali and Saleem, Ashraf and Aljnadi, Yaman and Lucas, Evan and Paheding, Sidike and Havens, Timothy C.},
+  journal={IEEE Access}, 
+  title={RUOD-R: A High-Fidelity Re-Annotated Benchmark for Underwater Object Detection}, 
+  year={2026},
+  doi={10.1109/ACCESS.2026.3685121}
+}
+```
+and the contributors of the **UTDAC** dataset.
+
+
 
 We redistribute our derived versions of the datasets according to:
 
