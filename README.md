@@ -65,7 +65,7 @@ For the annotation study, we compare the original RUOD annotations with the revi
 └── ...
 ```
 
-For the detection study, we combine DUO, RUOD-R and UTDAC into a single dataset with our four target classes. We generate five independent random training, validation, and testing splits using a 70/10/20 ratio. All detectors are trained and evaluated using the same splits to ensure a fair comparison. The test data is further organized according to the image-level domain properties assigned by our [Underwater Domain Labeling Framework](https://github.com/melaniewille/underwater_domain_labeling), with the corresponding subsets defined through YAML and TXT files. An overview of the domain labels can also be dowloaded with the images and annotations from [Hugging Face](https://huggingface.co/datasets/melaniewille/domain-aware-benchmarking-uod).
+For the detection study, we combine DUO, RUOD-R and UTDAC into a single dataset with our four target classes. We generate five independent random training, validation, and testing splits using a 70/10/20 ratio. All detectors are trained and evaluated using the same splits to ensure a fair comparison. The test data is further organized according to the image-level domain properties assigned by our [Underwater Domain Labeling Framework](https://github.com/melaniewille/underwater_domain_labeling), with the corresponding subsets defined through YAML and TXT files. An overview of the domain labels can also be dowloaded with the images and annotations from [Hugging Face](https://huggingface.co/datasets/melaniewille/domain-aware-benchmarking-uod). Keep the folder structure as is and place it [here](./detection-study/detector-analysis/).
 ```
 .
 ├── detection-study/
@@ -157,7 +157,7 @@ _Scripts_:
 - [test_fasterrcnn.py](detection-study/faster-rcnn/test_fasterrcnn.py)
 - [detector_ablation_rtdetr_*_test.py](./detection-study/rt-detr/)
 
-These scripts evaluate the trained detectors separately for each domain property. 
+These scripts evaluate the trained detectors separately across the 24 properties of the eight underwater domain categories. For YOLO26n and RT-DETR there is one evaluation script per domain category, hence, * = visibility / illumination / color / layout / scale / background / orientation / perspective. Results are saved under _model_/summary_test_results_all/.
 
 
 **Step 4 — Repeat**
