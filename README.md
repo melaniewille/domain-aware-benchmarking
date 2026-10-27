@@ -33,14 +33,55 @@ If this repository and/or our paper contributes to your research, please conside
 - [Acknowledgements](#acknowledgements)
 
 ## Repo Usage
-soon
+This repository contains the code used to reproduce the experiments presented in our WACV 2027 paper. The experiments are divided into two main components:
+
+**1. Annotation Study**, where we investigated the annotation differences between the original RUOD dataset and its revised version (RUOD-R) across underwater domains
+
+**2. Detection Study**, where we trained YOLO26n, Faster R-CNN and RT-DETR on a combined underwater object detection dataset and tested performance across underwater domains
+
+Both studies use image-level domain labels generated using our [Underwater Domain Labeling Framework](https://github.com/melaniewille/underwater_domain_labeling).
+
+The following sections describe the required datasets, experimental procedures and corresponding scripts.
+
 
 
 ## Datasets
-The data we used is available on [Hugging Face]([https://huggingface.co/](https://huggingface.co/datasets/melaniewille/domain-aware-benchmarking-uod)).  
+All experiments focus on four marine object classes: echinus, holothurian, scallop, and starfish. The datasets used in our experiments are available on [Hugging Face](https://huggingface.co/datasets/melaniewille/domain-aware-benchmarking-uod). 
 
-You can find the shared 
+For the annotation study, we compare the original RUOD annotations with the revised RUOD-R annotations using only images shared between both datasets after filtering for our four target classes. The shared images can be dowloaded from [Hugging Face](https://huggingface.co/datasets/melaniewille/domain-aware-benchmarking-uod), while their corresponding annotations from each dataset version can be found under [datasets/comparison-instances/](./annotation-study/datasets/comparison-instances/). The domain labels assigned to the shared images using our [Underwater Domain Labeling Framework](https://github.com/melaniewille/underwater_domain_labeling) are provided in [domain-labels/](./annotation-study/domain-labels/). They include both versions (based on RUOD and RUOD-R) for completeness. However, our analysis uses the RUOD-R domain labels, as the revised annotations are assumed to more accurately represent the actual scene composition.
 
+```
+.
+├── annotation-study/
+│   ├── datasets/
+│   │   ├── comparison-instances/
+│   │   │   ├── comparison-ruod-instances.json
+│   │   │   └── comparison-ruod-r-instances.json
+│   │   └── shared-images/
+│   │       └── [on hugging face]
+│   ├── domain-labels/
+│   │       ├── comparison_domain_labels_ruod.json
+│   │       └── comparison_domain_labels_ruod-r.json
+│   └── ...
+└── ...
+```
+
+For the detection study, we combine DUO, RUOD-R and UTDAC into a single dataset with our four target classes. We generate five independent random training, validation, and testing splits using a 70/10/20 ratio. All detectors are trained and evaluated using the same splits to ensure a fair comparison. The test data is further organized according to the image-level domain properties assigned by our [Underwater Domain Labeling Framework](https://github.com/melaniewille/underwater_domain_labeling), with the corresponding subsets defined through YAML and TXT files. An overview of the domain labels can also be dowloaded with the images and annotations from [Hugging Face](https://huggingface.co/datasets/melaniewille/domain-aware-benchmarking-uod).
+```
+.
+├── detection-study/
+│   ├── datasets/
+│   │   └── detector-analysis/
+│   │       └── [on hugging face]
+│   ├── yamls-detector-analysis/
+│   │       ├── all_dark_data_test.yaml
+│   │       ├── all_bright_data_test.yaml
+│   │       ├── ...
+│   │       ├── v2_all_dark_data_test.yaml
+│   │       └── ...
+│   └── ...
+└── ...
+```
 
 ## Annotation Study
 soon
