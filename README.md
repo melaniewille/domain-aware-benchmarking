@@ -83,7 +83,51 @@ For the detection study, we combine DUO, RUOD-R and UTDAC into a single dataset 
 ```
 
 ## Annotation Study
-soon
+To reproduce our annotation study and compare the original RUOD annotations against the revised RUOD-R annotations across the eight domain categories introduced in our framework, please follow the steps below:
+
+**Step 1 — Per-image annotation comparison**
+_Script_: [01-reannotation-per-image.py](./annotation-study/01-reannotation-per-image.py)
+
+This script compares the original RUOD and revised RUOD-R ground-truth annotations for each shared image (kept / added / removed). Bounding boxes are matched using an Intersection over Union (IoU) threshold of 0.5 by default.
+
+**Input**:
+- Original RUOD annotations
+- Revised RUOD-R annotations
+- Image-level domain labels
+
+**Output**:
+- results/reannotation-per-image-with-domain.csv
+
+
+**Step 2 — Domain-dependent correction rates**
+_Script_: [02-correction-rate-evaluation.py](./annotation-study/02-correction-rate-evaluation.py)
+
+This script calculates and summarizes annotation correction rates across the different underwater domain categories.
+
+**Input**:
+- results/reannotation-per-image-with-domain.csv
+
+**Output**:
+- results/correction-rates-per-domain.csv
+
+
+**Step 3 — Statistical significance and robustness of results**
+_Script_: [03-statistical-analysis.py](./annotation-study/03-statistical-analysis.py)
+
+This script evaluates the statistical significance and robustness of domain-dependent differences in annotation correction rates. It applies Kruskal–Wallis tests to identify differences across domain categories, Spearman's rank correlation to assess ordinal relationships, and pairwise Mann–Whitney U tests to compare individual categories. Bootstrap resampling is used to assess the stability of the statistical results.
+
+**Input**:
+- results/reannotation-per-image-with-domain.csv
+
+**Output**:
+- results/kruskal.csv
+- results/spearman.csv
+- reults/pairwise-mannwhitney.csv
+- results/bootstrap-kruskal-spearman.csv
+- results/bootstrap-mannwhitney.csv
+
+
+
 
 ## Detection Study
 This repository provides the training and testing scripts for [YOLO26n](./detection-study/yolo), [Faster RCNN](./detection-study/faster-rcnn), and [RT-DETR](./detection-study/rt-detr) object detection models. 
