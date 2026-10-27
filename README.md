@@ -212,7 +212,7 @@ the contributors of the revised **RUOD-R** dataset - check out their [Github](ht
   doi={10.1109/ACCESS.2026.3685121}
 }
 ```
-and the contributors of the **UTDAC** dataset.
+and the Underwater Target Detection Algorithm Competition 2020 as the contributors of the **UTDAC** dataset. We use it in an improved version as open-sourced by Dai _et al._ on their [Github](https://github.com/Ixiaohuihuihui/ERL-Net-for-Underwater-Object-Detection).
 
 
 
