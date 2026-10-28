@@ -1,7 +1,7 @@
 
 path: ..
-train: ../datasets/detector-analysis/generated_txt_files/train.txt  # train images (relative to 'path')
-val: ../datasets/detector-analysis/generated_txt_files/test_layout_moderate.txt  # test images (relative to 'path')
+train: ../datasets/detector-analysis/generated_txt_files/train.txt  
+val: ../datasets/detector-analysis/generated_txt_files/test_layout_moderate.txt  
 
 
 

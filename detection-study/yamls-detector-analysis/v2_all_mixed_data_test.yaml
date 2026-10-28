@@ -1,7 +1,7 @@
 
 path: ..
-train: ../datasets/detector-analysis/generated_txt_files_v2/train.txt  # train images (relative to 'path')
-val: ../datasets/detector-analysis/generated_txt_files_v2/test.txt  # test images (relative to 'path')
+train: ../datasets/detector-analysis/generated_txt_files_v2/train.txt  
+val: ../datasets/detector-analysis/generated_txt_files_v2/test.txt  
 
 
 # Number of classes

@@ -12,10 +12,10 @@ os.chdir(ROOT)
 
 yaml_path = Path(__file__).resolve().parent.parent / "yamls-detector-analysis" / "v5_all_mixed_data_train.yaml"
 
-# Load a model
-model = RTDETR('rtdetr-l.pt')   # load a pretrained model (recommended for training)
+# load model
+model = RTDETR('rtdetr-l.pt')   
 
-# Train the model
-model.train(data=yaml_path, epochs=50, imgsz=640, batch=16, project=project_name)  # train the model under standard parameters
+# train model
+model.train(data=yaml_path, epochs=50, imgsz=640, batch=16, project=project_name)  
 
-# Best model saved per default in "current_directory/runs/detect/combi_mixed_train/train/weights/best.pt"
+

@@ -12,10 +12,9 @@ os.chdir(ROOT)
 # model paths
 saved_model = ROOT / 'runs/detect/detector_analysis_all_trained_yolo/train/weights/best.pt'
 
-# check if model files exist
+# check if model file exists and load
 assert saved_model.exists(), f"Model file not found: {saved_model}"
 
-# load models
 model_50 = YOLO(saved_model)
 
 # CSV setup
@@ -25,7 +24,7 @@ csv_path.parent.mkdir(parents=True, exist_ok=True)
 with open(csv_path, mode='w', newline='') as file:
     writer = csv.writer(file)
     
-    # header
+   
     writer.writerow([
         "domain",
         "model_epochs",
@@ -41,7 +40,6 @@ with open(csv_path, mode='w', newline='') as file:
         project_name = f"{domain}_test"
 
 
-        # --- 50 epochs ---
         metrics_50 = model_50.val(
             data=yaml_path,
             conf=0.25,

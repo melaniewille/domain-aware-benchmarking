@@ -17,7 +17,6 @@ class YoloTxtDetectionDataset(Dataset):
 
         split_file = Path(self.cfg[split])
 
-        # If train/val starts with ../, resolve it relative to the YAML file location
         if str(split_file).startswith("../"):
             self.split_txt = (self.yaml_path.parent / split_file).resolve()
         else:
@@ -31,7 +30,6 @@ class YoloTxtDetectionDataset(Dataset):
 
             line_path = Path(line)
 
-            # Handle ../ image paths relative to the YAML file location
             if str(line_path).startswith("../"):
                 p = (self.yaml_path.parent / line_path).resolve()
             else:
@@ -39,7 +37,7 @@ class YoloTxtDetectionDataset(Dataset):
 
             self.image_paths.append(p)
 
-        self.num_classes = int(self.cfg["nc"]) + 1  # + background
+        self.num_classes = int(self.cfg["nc"]) + 1  
     
     def __len__(self):
         return len(self.image_paths)
@@ -61,7 +59,7 @@ class YoloTxtDetectionDataset(Dataset):
                     continue
 
                 cls, xc, yc, bw, bh = map(float, parts)
-                cls = int(cls) + 1  # Faster R-CNN uses 0 as background
+                cls = int(cls) + 1 
 
                 x1 = (xc - bw / 2) * w
                 y1 = (yc - bh / 2) * h
