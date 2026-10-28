@@ -1,22 +1,3 @@
-# ============================================================
-# ANNOTATION ERROR RATE STATISTICAL ANALYSIS
-# ============================================================
-# Input:
-#   results/reannotation-per-image-with-domain.csv
-#
-# Outputs:
-#   results/
-#
-# Main analyses:
-#   1. Kruskal-Wallis test per domain property
-#   2. Kruskal effect size: epsilon-squared
-#   3. Pairwise Mann-Whitney U tests with FDR correction
-#   4. Pairwise effect size: Cliff's delta
-#   5. Spearman rank correlation for monotonic ordered properties
-#   6. Bootstrap robustness analysis
-#
-# ============================================================
-
 import os
 import itertools
 import numpy as np
@@ -26,8 +7,7 @@ from scipy.stats import kruskal, mannwhitneyu, spearmanr
 from statsmodels.stats.multitest import multipletests
 
 
-# Config
-
+# file paths
 INPUT_FILE = "results/reannotation-per-image-with-domain.csv"
 OUT_DIR = "results"
 
@@ -52,7 +32,7 @@ DOMAIN_COLS = [
 ]
 
 
-# Ordered properties (these are the ones where Spearman makes sense)
+# ordered properties (these are the ones where Spearman makes sense)
 ORDINAL_MAPPINGS = {
     "visibility_category": {
         "low": 1,
@@ -82,7 +62,7 @@ ORDINAL_MAPPINGS = {
 }
 
 
-# Not tested with Spearman because these are not safely monotonic
+# not tested with Spearman because these are not safely monotonic
 NON_MONOTONIC_REASON = {
     "color_category": "nominal category; no natural ordering",
     "background_category": "not assumed monotonic; simple/textured/complex may not form a linear difficulty order",
@@ -91,47 +71,24 @@ NON_MONOTONIC_REASON = {
 
 
 
-# Helpers
-
+# helpers
 def clean_label(x):
     if pd.isna(x):
         return np.nan
     return str(x).strip().lower().replace(" ", "_").replace("-", "_")
 
 
-
 def epsilon_squared_kruskal(h_stat, n, k):
-    """
-    Epsilon-squared effect size for Kruskal-Wallis.
-
-    Formula:
-        epsilon^2 = (H - k + 1) / (n - k)
-
-    where:
-        H = Kruskal-Wallis statistic
-        k = number of groups
-        n = total number of observations
-    """
     if pd.isna(h_stat) or n <= k:
         return np.nan
 
     eps = (h_stat - k + 1) / (n - k)
 
-    # Clip negative sampling estimates to zero
+    # clip negative sampling estimates to zero
     return max(0, eps)
 
 
 def cliffs_delta(x, y):
-    """
-    Cliff's delta.
-
-    Interpretation:
-        +1 means all values in x are larger than all values in y.
-         0 means no dominance.
-        -1 means all values in y are larger than all values in x.
-
-    Efficient implementation using sorting.
-    """
     x = np.asarray(x)
     y = np.asarray(y)
 
@@ -170,7 +127,7 @@ def bootstrap_ci(values, lower=2.5, upper=97.5):
     )
 
 
-# ---------------- LOAD DATA ----------------
+# load files
 
 df = pd.read_csv(INPUT_FILE)
 
@@ -184,9 +141,8 @@ print(f"Loaded {len(df)} rows with non-missing {ERROR_COL}.")
 
 
 
-# ============================================================
-# 1. KRUSKAL-WALLIS TEST + EPSILON-SQUARED
-# ============================================================
+
+# 1. kruskal wallis test
 
 kruskal_rows = []
 
@@ -219,9 +175,8 @@ kruskal_df = pd.DataFrame(kruskal_rows)
 kruskal_df.to_csv(os.path.join(OUT_DIR, "kruskal.csv"), index=False)
 
 
-# ============================================================
-# 2. SPEARMAN RANK CORRELATION
-# ============================================================
+
+# 2. spearman rank correlation
 
 spearman_rows = []
 
@@ -254,9 +209,7 @@ spearman_df = pd.DataFrame(spearman_rows)
 spearman_df.to_csv(os.path.join(OUT_DIR, "spearman.csv"), index=False)
 
 
-# ============================================================
-# 3. PAIRWISE MANN-WHITNEY U + CLIFF'S DELTA
-# ============================================================
+# 3. pairwise mann-whitney u test
 
 pairwise_rows = []
 
@@ -326,9 +279,7 @@ pairwise_df.to_csv(
 )
 
 
-# ============================================================
-# 4. BOOTSTRAP ROBUSTNESS ANALYSIS
-# ============================================================
+# 4. bootstrap robustness
 
 bootstrap_overview_rows = []
 bootstrap_pairwise_rows = []
@@ -384,7 +335,7 @@ for col in DOMAIN_COLS:
             boot_kw_p.append(p)
             boot_eps.append(eps)
 
-        # Spearman only for ordered properties
+        # spearman only for ordered properties
         if col in ORDINAL_MAPPINGS:
             mapping = ORDINAL_MAPPINGS[col]
             boot = boot.copy()
@@ -402,7 +353,7 @@ for col in DOMAIN_COLS:
                 boot_rho.append(rho)
                 boot_sp_p.append(sp_p)
 
-        # Pairwise bootstrap effect stability
+        # pairwise bootstrap
         for a, b in itertools.combinations(categories, 2):
 
             x = boot.loc[boot[col] == a, ERROR_COL].dropna().values
@@ -454,8 +405,7 @@ for col in DOMAIN_COLS:
             pairwise_mean_diff_tracker[(a, b)]
         )
 
-        # Direction stability:
-        # How often does category_a have higher correction rate than category_b?
+        # direction stability (how often does category_a have higher correction rate than category_b)
         mean_diffs = np.asarray(pairwise_mean_diff_tracker[(a, b)])
         direction_fraction_a_gt_b = np.mean(mean_diffs > 0) if len(mean_diffs) else np.nan
 
@@ -491,10 +441,7 @@ bootstrap_pairwise_df.to_csv(
 
 
 
-# ============================================================
-# PRINT SUMMARY
-# ============================================================
-
+# summary
 print()
 print("Saved results to:", OUT_DIR)
 print()
@@ -502,5 +449,5 @@ print("Main files:")
 print(" - kruskal.csv")
 print(" - spearman.csv")
 print(" - pairwise-mannwhitney.csv")
-print(" - bootstrap.csv")
-
+print(" - bootstrap-kruskal-spearman.csv")
+print(" - bootstrap-mannwhitney.csv")

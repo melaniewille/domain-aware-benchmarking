@@ -1,8 +1,7 @@
 import pandas as pd
 import os
 
-# ---------------- CONFIG ----------------
-
+# file paths
 INPUT_FILE = "results/reannotation-per-image-with-domain.csv"
 OUTPUT_FILE = "results/correction-rates-per-domain.csv"
 
@@ -24,21 +23,20 @@ METRIC_COLS = [
     "removed_rate"
 ]
 
-# ---------------- LOAD ----------------
-
+# load files
 df = pd.read_csv(INPUT_FILE)
 
 os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
 
-# ---------------- COMPUTE ERROR-TYPE RATES ----------------
 
+# compute error rates
 denom = df["original_count"].replace(0, pd.NA)
 
 df["added_rate"] = df["added"] / denom
 df["removed_rate"] = df["removed"] / denom
 
-# ---------------- SUMMARISE PER DOMAIN CATEGORY ----------------
 
+# summarise per domain
 summary = {
     "images": {}
 }
@@ -69,8 +67,8 @@ for col in DOMAIN_COLS:
             summary[f"median_{metric}"][header] = values.median()
             summary[f"std_{metric}"][header] = values.std()
 
-# ---------------- SAVE ----------------
 
+# save
 summary_df = pd.DataFrame(summary).T
 summary_df.to_csv(OUTPUT_FILE)
 

@@ -1,13 +1,9 @@
-# TO ASSESS RE-ANNOTATION PER IMAGE - LINKED TO DOMAIN PROPERTIES
-# SAVE RESULTS UNDER: "results/reannotation-per-domain.csv"
-
 import json
 import pandas as pd
 from collections import defaultdict
 from pathlib import Path
 
-# ---------------- CONFIG ----------------
-
+# file paths
 RUOD_FILE = "datasets/comparison-instances/comparison-ruod-instances.json"
 RUOD_R_FILE = "datasets/comparison-instances/comparison-ruod-r-instances.json"
 
@@ -19,8 +15,8 @@ Path("results").mkdir(parents=True, exist_ok=True)
 
 IOU_THRESH = 0.5
 
-# ---------------- LOAD ----------------
 
+# load files
 with open(RUOD_FILE) as f:
     data_r = json.load(f)
 
@@ -29,18 +25,15 @@ with open(RUOD_R_FILE) as f:
 
 domain = pd.read_csv(DOMAIN_FILE)
 
-# ---------------- HELPERS ----------------
 
+# normalize filenames
 def norm(name):
     return Path(str(name)).name.strip().lower()
 
-
-# normalize filenames
 domain["image_file"] = domain["image_file"].apply(norm)
 
 
-# ---------------- map filename -> image_id ----------------
-
+# map filename to image_id
 def build_map(data):
     return {
         norm(img["file_name"]): img["id"]
@@ -52,8 +45,8 @@ map_u = build_map(data_u)
 
 shared_files = sorted(set(map_r) & set(map_u))
 
-# ---------------- annotations ----------------
 
+# annotation helpers
 def build_ann(data):
     d = defaultdict(list)
     for ann in data["annotations"]:
@@ -62,8 +55,6 @@ def build_ann(data):
 
 ann_r = build_ann(data_r)
 ann_u = build_ann(data_u)
-
-# ---------------- IoU ----------------
 
 def iou(a, b):
     ax, ay, aw, ah = a
@@ -83,8 +74,8 @@ def iou(a, b):
 
     return inter / (union + 1e-9)
 
-# ---------------- match annotations ----------------
 
+# match annotations
 def match(r_list, u_list):
     used_u = set()
     matched = 0
@@ -115,8 +106,8 @@ def match(r_list, u_list):
 
     return added, removed, matched
 
-# ---------------- build instance evaluation ----------------
 
+# evaluation
 rows = []
 missing_in_ruod = []
 missing_in_ruod_r = []
@@ -175,9 +166,9 @@ for f in shared_files:
 
 df = pd.DataFrame(rows)
 
-# ---------------- merge domain labels ----------------
 
-domain_cols = [
+# add domain labels
+DOMAIN_COLS = [
     "image_file",
     "visibility_category",
     "color_category",
@@ -189,32 +180,30 @@ domain_cols = [
     "perspective_category"
 ]
 
-available_domain_cols = [
-    col for col in domain_cols
+available_DOMAIN_COLS = [
+    col for col in DOMAIN_COLS
     if col in domain.columns
 ]
 
-missing_domain_cols = [
-    col for col in domain_cols
+missing_DOMAIN_COLS = [
+    col for col in DOMAIN_COLS
     if col not in domain.columns
 ]
 
-if missing_domain_cols:
+if missing_DOMAIN_COLS:
     print("WARNING missing domain columns:")
-    for col in missing_domain_cols:
+    for col in missing_DOMAIN_COLS:
         print(" -", col)
 
 df = df.merge(
-    domain[available_domain_cols],
+    domain[available_DOMAIN_COLS],
     on="image_file",
     how="left"
 )
 
-# ---------------- save ----------------
-
+# save
 df.to_csv(OUT_CSV, index=False)
 
-# ---------------- report ----------------
 
 print("Saved:")
 print(" -", OUT_CSV)
@@ -233,4 +222,4 @@ print(df["category"].value_counts())
 
 print()
 print("Domain labels missing after merge:")
-print(df[available_domain_cols].isna().sum())
+print(df[available_DOMAIN_COLS].isna().sum())
