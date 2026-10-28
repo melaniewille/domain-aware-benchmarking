@@ -32,7 +32,24 @@ If this repository and/or our paper contributes to your research, please conside
 - [Acknowledgements](#acknowledgements)
 
 ## Repo Usage
-This repository contains the code used to reproduce the experiments presented in our WACV 2027 paper. The experiments are divided into two main components:
+This repository contains the code used to reproduce the experiments presented in our WACV 2027 paper.
+Clone the repository and navigate to its directory:
+
+```bash
+git clone https://github.com/melaniewille/domain-aware-benchmarking-uod.git
+cd domain-aware-benchmarking-uod
+```
+
+Install the required Python dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+All required packages and their versions are specified in [`requirements.txt`](./requirements.txt).
+
+
+The experiments are divided into two main components:
 
 **1. Annotation Study**, where we investigated the annotation differences between the original RUOD dataset and its revised version (RUOD-R) across underwater domains
 
@@ -136,8 +153,9 @@ This script evaluates the statistical significance and robustness of domain-depe
 To reproduce our detection study and evaluate how different underwater domain conditions affect object detector performance for [YOLO26n](./detection-study/yolo), [Faster RCNN](./detection-study/faster-rcnn), and [RT-DETR](./detection-study/rt-detr), please follow the steps below.
 
 **Step 1 — Preparation**
-- Install dependencies
-- Make sure you have downloaded the data from Hugging Face as described in the [Datasets](#datasets) section above and place in correct directory
+
+- Install the required Python dependencies as described in the [Installation](#installation) section.
+- Download the required datasets from Hugging Face as described in the [Datasets](#datasets) section above, and place them in the corresponding directories.
 
 
 **Step 2 — Detector training**
